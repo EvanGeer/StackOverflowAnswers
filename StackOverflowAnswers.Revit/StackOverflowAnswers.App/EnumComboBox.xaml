@@ -6,9 +6,27 @@
         xmlns:local="clr-namespace:StackOverflowAnswers.Wpf"
         xmlns:enums="clr-namespace:StackOverflowAnswers.Wpf.Enums"
         mc:Ignorable="d"
-        Title="EnumComboBox" Height="450" Width="800">
-    <Grid>
-        <ComboBox ItemsSource="{Binding Source={enums:EnumBindingSource {x:Type enums:SampleEnum}}}" />
-
-    </Grid>
+        Title="EnumComboBox"
+        Height="450"
+        Width="800">
+    <StackPanel>
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin"
+                        Value="2" />
+            </Style>
+        </StackPanel.Resources>
+        <ComboBox x:Name="Combo"
+                  ItemsSource="{Binding Source={enums:EnumBindingSource {x:Type enums:SampleEnum}}}"
+                  DisplayMemberPath="Description"
+                  SelectedValuePath="Value" />
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Value:" Foreground="Gray" />
+            <TextBlock Text="{Binding SelectedValue, ElementName=Combo}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Desciption:" Foreground="Gray" />
+            <TextBlock Text="{Binding SelectedItem.Description, ElementName=Combo}" />
+        </StackPanel>
+    </StackPanel>
 </Window>

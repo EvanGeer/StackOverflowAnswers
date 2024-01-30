@@ -8,15 +8,33 @@ namespace StackOverflowAnswers.Wpf.Enums
 {
     public class EnumViewModel
     {
-        public EnumViewModel(Enum value, string description)
+        public EnumViewModel(Enum value)
         {
             Value = value;
-            Description = description;
+            Description = getDescription(value);
         }
 
         public Enum Value { get; }
         public string Description { get; }
+
+        private string getDescription(Enum value)
+        {
+            if (!(value?.GetType().GetField(value?.ToString()) is FieldInfo enumField))
+                // value is null...
+                return string.Empty;
+
+            var descriptionAttribute = enumField.GetCustomAttributes(typeof(DescriptionAttribute), false)
+                .OfType<DescriptionAttribute>()
+                .FirstOrDefault();
+
+            if (descriptionAttribute is null || string.IsNullOrEmpty(descriptionAttribute.Description))
+                // description attribute is missing or blank...
+                return value.ToString();
+
+            return descriptionAttribute.Description;
+        }
     }
+
     public class EnumBindingSourceExtension : MarkupExtension
     {
         private Type _enumType;
@@ -25,18 +43,19 @@ namespace StackOverflowAnswers.Wpf.Enums
             get { return this._enumType; }
             set
             {
-                if (value != this._enumType)
-                {
-                    if (null != value)
-                    {
-                        Type enumType = Nullable.GetUnderlyingType(value) ?? value;
-                        if (!enumType.IsEnum)
-                            throw new ArgumentException("Type must be for an Enum.");
-                    }
+                if (value == this._enumType) return;
 
-                    this._enumType = value;
-                }
+                if (!isEnumType(value)) throw new ArgumentException("Type must be for an Enum.");
+
+                this._enumType = value;
             }
+        }
+
+        private bool isEnumType(Type type)
+        {
+            if (type is null) return false;
+            Type enumType = Nullable.GetUnderlyingType(type) ?? type;
+            return enumType.IsEnum;
         }
 
         public EnumBindingSourceExtension() { }
@@ -48,49 +67,19 @@ namespace StackOverflowAnswers.Wpf.Enums
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (null == this._enumType)
+            if (this._enumType is null)
                 throw new InvalidOperationException("The EnumType must be specified.");
 
             Type actualEnumType = Nullable.GetUnderlyingType(this._enumType) ?? this._enumType;
-            Array enumValues = Enum.GetValues(actualEnumType);
+            var enumValues = Enum.GetValues(actualEnumType)
+                .OfType<Enum>()
+                .Select(x => new EnumViewModel(x))
+                .ToList();
 
-            if (actualEnumType == this._enumType)
-                return enumValues;
-
-            Array tempArray = Array.CreateInstance(actualEnumType, enumValues.Length + 1);
-            enumValues.CopyTo(tempArray, 1);
-            return tempArray;
+            return enumValues;
         }
-
-
     }
-    public class EnumDescriptionTypeConverter : EnumConverter
-    {
-        public EnumDescriptionTypeConverter(Type type) : base(type) { }
-        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
-        {
-            if (destinationType != typeof(string))
-                return base.ConvertTo(context, culture, value, destinationType);
 
-            if (!(value?.GetType().GetField(value?.ToString()) is FieldInfo enumField))
-                // value is null...
-                return string.Empty;
-
-            var descriptionAttribute = enumField.GetCustomAttributes(typeof(DescriptionAttribute), false)
-                .OfType<DescriptionAttribute>()
-                .FirstOrDefault();
-
-            if (descriptionAttribute is null || string.IsNullOrEmpty(descriptionAttribute.Description)) 
-                // description attribute is missing or blank...
-                return value.ToString();
-
-            return descriptionAttribute.Description;
-        }
-
-
-
-    }
-    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum SampleEnum
     {
         [Description("A nice descrip")]

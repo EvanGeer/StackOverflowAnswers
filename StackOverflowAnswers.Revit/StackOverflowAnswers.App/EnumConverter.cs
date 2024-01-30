@@ -40,7 +40,7 @@ namespace StackOverflowAnswers.Wpf.Enums
         private Type _enumType;
         public Type EnumType
         {
-            get { return this._enumType; }
+            get => this._enumType;
             set
             {
                 if (value == this._enumType) return;
@@ -54,7 +54,7 @@ namespace StackOverflowAnswers.Wpf.Enums
         private bool isEnumType(Type type)
         {
             if (type is null) return false;
-            Type enumType = Nullable.GetUnderlyingType(type) ?? type;
+            var enumType = Nullable.GetUnderlyingType(type) ?? type;
             return enumType.IsEnum;
         }
 
@@ -70,7 +70,7 @@ namespace StackOverflowAnswers.Wpf.Enums
             if (this._enumType is null)
                 throw new InvalidOperationException("The EnumType must be specified.");
 
-            Type actualEnumType = Nullable.GetUnderlyingType(this._enumType) ?? this._enumType;
+            var actualEnumType = Nullable.GetUnderlyingType(this._enumType) ?? this._enumType;
             var enumValues = Enum.GetValues(actualEnumType)
                 .OfType<Enum>()
                 .Select(x => new EnumViewModel(x))
@@ -80,13 +80,11 @@ namespace StackOverflowAnswers.Wpf.Enums
         }
     }
 
-    public enum SampleEnum
+    public enum IVAC_VT_SHIFT_SPD
     {
-        [Description("A nice descrip")]
-        Sample1,
-        [Description("A nicer description")]
-        Sample2,
-        [Description("An okay desc.")]
-        Sample3,
+        [Description("16.1299991607666")]
+        DATA16,
+        [Description("32.130001068115234")]
+        DATA32,
     }
 }

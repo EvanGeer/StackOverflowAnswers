@@ -1,0 +1,26 @@
+﻿<Window x:Class="StackOverflowAnswers.Wpf.ScrollingTextBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StackOverflowAnswers.Wpf"
+        mc:Ignorable="d"
+        Title="ScrollingTextBox"
+        Height="200"
+        Width="400">
+    <Grid>
+        <ScrollViewer x:Name="scrollViewer"
+                      HorizontalAlignment="Left"
+                      Height="Auto"
+                      VerticalAlignment="Top"
+                      Width="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBox x:Name="txtbxCommLog"
+                     Text="Staring text"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
+        </ScrollViewer>
+        <Line local:LayerView.HasFish="{x:Null}"
+              local:LayerView.PathStyle="{x:Null}"/>
+    </Grid>
+</Window>

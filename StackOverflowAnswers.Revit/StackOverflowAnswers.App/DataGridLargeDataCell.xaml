@@ -1,0 +1,39 @@
+﻿<Window x:Class="StackOverflowAnswers.Wpf.DataGridLargeDataCell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StackOverflowAnswers.Wpf"
+        mc:Ignorable="d"
+        Title="DataGridLargeDataCell" 
+        Height="450" 
+        Width="800">
+    <Grid>
+        <DataGrid  VerticalAlignment="Top"
+                   ItemsSource="{Binding Datas}"
+                   SelectionUnit="FullRow"
+                   AutoGenerateColumns="False"
+                   IsReadOnly="True"
+                   x:Name="grid">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Description"
+                                        Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+<DataTemplate>
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  MaxHeight="100"
+                  >
+        <TextBlock Text="{Binding Description}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    TextWrapping="Wrap"
+                    />
+    </ScrollViewer>
+</DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>

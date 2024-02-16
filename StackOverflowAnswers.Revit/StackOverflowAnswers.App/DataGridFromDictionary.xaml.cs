@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace StackOverflowAnswers.Wpf
 {
@@ -49,9 +37,9 @@ namespace StackOverflowAnswers.Wpf
 
         public DataTable CovertToDataTable(List<Dictionary<string, string>> dynamicObjects)
         {
-            DataTable table = new DataTable();
+            var table = new DataTable();
 
-            foreach(var attributeDictionary in dynamicObjects)
+            foreach (var attributeDictionary in dynamicObjects)
             {
                 // add any missing columns
                 foreach (var attribute in attributeDictionary.Keys)

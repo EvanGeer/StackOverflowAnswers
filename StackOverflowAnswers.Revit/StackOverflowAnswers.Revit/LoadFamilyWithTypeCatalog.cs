@@ -29,14 +29,14 @@ namespace StackOverflowAnswers.Revit
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             ViewPlan viewPlan = null;
-            PlanViewRange viewRange = viewPlan.GetViewRange();
+            var viewRange = viewPlan.GetViewRange();
             Level cutLevel = null; // The cut level of the view
             var walls = new List<Wall>();
 
-            foreach (Wall wall in walls) // Assuming we have a list of walls
+            foreach (var wall in walls) // Assuming we have a list of walls
             {
-                double wallTop = wall.get_BoundingBox(viewPlan).Min.Z;
-                double wallBase = wall.get_BoundingBox(viewPlan).Max.Z;
+                var wallTop = wall.get_BoundingBox(viewPlan).Min.Z;
+                var wallBase = wall.get_BoundingBox(viewPlan).Max.Z;
 
                 if (wallBase < cutLevel.Elevation && wallTop > cutLevel.Elevation)
                 {

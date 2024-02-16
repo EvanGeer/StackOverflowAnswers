@@ -16,26 +16,26 @@ namespace StackOverflowAnswers.Revit
             var view = commandData.Application.ActiveUIDocument.ActiveView;
 
 
-using (var t = new Transaction(doc, "Add filter"))
-{
-    t.Start();
+            using (var t = new Transaction(doc, "Add filter"))
+            {
+                t.Start();
 
-    var parameter = new FilteredElementCollector(doc)
-        .OfClass(typeof(SharedParameterElement))
-        .OfType<SharedParameterElement>()
-        .Where(x => x.GuidValue == new Guid("cf973001-e6e2-4e80-b502-ff74918165c9")) // if you know the GUID
-        .Where(x => x.Name == "MySharedParam") // if you know the name
-        .FirstOrDefault();
+                var parameter = new FilteredElementCollector(doc)
+                    .OfClass(typeof(SharedParameterElement))
+                    .OfType<SharedParameterElement>()
+                    .Where(x => x.GuidValue == new Guid("cf973001-e6e2-4e80-b502-ff74918165c9")) // if you know the GUID
+                    .Where(x => x.Name == "MySharedParam") // if you know the name
+                    .FirstOrDefault();
 
-    var filterRule = ParameterFilterRuleFactory.CreateContainsRule(parameter.Id, "some value", false);
-    var parameterFilter = new ElementParameterFilter(filterRule);
-    var categories = new List<ElementId> { new ElementId(BuiltInCategory.OST_Walls) };
+                var filterRule = ParameterFilterRuleFactory.CreateContainsRule(parameter.Id, "some value", false);
+                var parameterFilter = new ElementParameterFilter(filterRule);
+                var categories = new List<ElementId> { new ElementId(BuiltInCategory.OST_Walls) };
 
-    var filterElement = ParameterFilterElement.Create(doc, "Filter", categories, parameterFilter);
-    view.SetFilterVisibility(filterElement.Id, false);
+                var filterElement = ParameterFilterElement.Create(doc, "Filter", categories, parameterFilter);
+                view.SetFilterVisibility(filterElement.Id, false);
 
-    t.Commit();
-}
+                t.Commit();
+            }
 
             var fec = new FilteredElementCollector(doc)
                     .OfClass(typeof(Wall))

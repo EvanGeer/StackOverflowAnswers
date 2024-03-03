@@ -1,0 +1,39 @@
+﻿<Window x:Class="StackOverflowAnswers.Wpf.CollapseOnSelected"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StackOverflowAnswers.Wpf"
+        mc:Ignorable="d"
+        Title="CollapseOnSelected" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+<ListBox x:Name="OverlayPicker"
+            ItemsSource="{Binding Data}"
+            DisplayMemberPath="Name"/>
+        <!--<ListBoxItem Content="SF90" />
+            <ListBoxItem Content="Camero SS (Gen 5)" />
+            <ListBoxItem Content="Hellcat" />-->
+
+        <StackPanel Grid.Column="5">
+            <TextBlock Text="Gauge BG Color">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility"
+                                Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem.Name, ElementName=OverlayPicker}"
+                                         Value="SF90">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

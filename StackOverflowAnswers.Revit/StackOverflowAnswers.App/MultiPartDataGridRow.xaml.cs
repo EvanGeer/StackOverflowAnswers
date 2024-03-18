@@ -46,7 +46,7 @@ namespace StackOverflowAnswers.Wpf
             {
                 Table = new DataTable();
 
-                Table.Columns.Add("c0");
+                Table.Columns.Add("c0", typeof(string));
                 Table.Columns.Add("c1", typeof(IList));
                 Table.Columns.Add("c2", typeof(IList));
                 Table.Columns.Add("c3", typeof(IList));
@@ -67,16 +67,16 @@ namespace StackOverflowAnswers.Wpf
 
 private void MyDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
 {
-    if (e.Column.Header == "c0")
-    {
-                e.Column.Header = "";
-    }
+    // Optional: Remove the column header for the row headers
+    if (e.Column.Header == "c0") e.Column.Header = "";
+
+    // Let the non-list data auto-generate normally
     if (!e.PropertyType.IsAssignableFrom(typeof(IList))) return;
 
     // create a new column
     var newColumn = new DataGridTemplateColumn();
     newColumn.Header = e.Column.Header;
-            
+
     // create a new binding
     var binding = new Binding(e.PropertyName);
     binding.Mode = BindingMode.TwoWay;
@@ -87,7 +87,7 @@ private void MyDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGenerati
     var newCellTemplate = new DataTemplate();
     newCellTemplate.VisualTree = elementFactory;
     newColumn.CellTemplate = newCellTemplate;
-            
+
     // assign the new column
     e.Column = newColumn;
 }

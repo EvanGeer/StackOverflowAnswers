@@ -1,8 +1,7 @@
 ﻿<Application x:Class="StackOverflowAnswers.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:StackOverflowAnswers.App"
-             StartupUri="LiveChartsFormatting.xaml">
+             xmlns:local="clr-namespace:StackOverflowAnswers.App" StartupUri="ConditionalCombo.xaml">
     <Application.Resources>
 
     </Application.Resources>

@@ -1,0 +1,42 @@
+﻿<Window x:Class="StackOverflowAnswers.Wpf.BorderDropShadow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StackOverflowAnswers.Wpf"
+        mc:Ignorable="d"
+        Title="BorderDropShadow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--TopBar-->
+            <RowDefinition Height="106" x:Name="Top_Bar" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+<!--Top Bar stuff-->
+<Border Grid.Row="0" BorderBrush="White" BorderThickness="1" Background="White" Panel.ZIndex="1">
+    <Border.Effect>
+        <DropShadowEffect BlurRadius="10" ShadowDepth="4" />
+    </Border.Effect>
+</Border>
+
+
+        <!--Side Bar and MainView-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="128" x:Name="SideBar" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+
+            <!--Side Bar stuff-->
+            <Border Grid.Column="0">
+            </Border>
+
+            <!--Main View stuff-->
+            <Border Grid.Column="1" Background="#F2F2F2">
+
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

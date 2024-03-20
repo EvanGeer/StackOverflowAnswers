@@ -48,27 +48,22 @@ namespace StackOverflowAnswers.Wpf
                 OnPropertyChanged();
             }
         }
-public bool IsToggleButtonEnabled
-{
-    get => isToggleButtonEnabled;
-    set
-    {
-        isToggleButtonEnabled = value;
-        OnPropertyChanged();
-        OnPropertyChanged(nameof(DisplayText));
-        OnPropertyChanged(nameof(State));
-        OnPropertyChanged(nameof(ComboBoxVisibility));
-        OnPropertyChanged(nameof(TextBlockVisibility));
-    }
-}
-public Visibility ComboBoxVisibility => IsToggleButtonEnabled ? Visibility.Visible : Visibility.Collapsed;
-public Visibility TextBlockVisibility => IsToggleButtonEnabled ? Visibility.Hidden : Visibility.Visible;
+        public bool IsToggleButtonEnabled
+        {
+            get => isToggleButtonEnabled;
+            set
+            {
+                isToggleButtonEnabled = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(State));
+                OnPropertyChanged(nameof(SelectedItem));
+                OnPropertyChanged(nameof(ComboBoxVisibility));
+                OnPropertyChanged(nameof(TextBlockVisibility));
+            }
+        }
+        public Visibility ComboBoxVisibility => IsToggleButtonEnabled ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility TextBlockVisibility => IsToggleButtonEnabled ? Visibility.Hidden : Visibility.Visible;
 
-
-        public string DisplayText 
-{ 
-    get => IsToggleButtonEnabled ? selectedItem : string.Empty; 
-}
 
         public string State
         {
@@ -80,8 +75,6 @@ public Visibility TextBlockVisibility => IsToggleButtonEnabled ? Visibility.Hidd
             get => selectedItem;
             set
             {
-                if (!isToggleButtonEnabled) 
-                    return; // prevent hiding the text from resetting the selection
                 selectedItem = value;
                 OnPropertyChanged();
             }

@@ -56,7 +56,6 @@ namespace StackOverflowAnswers.Wpf
                 isToggleButtonEnabled = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(State));
-                OnPropertyChanged(nameof(SelectedItem));
                 OnPropertyChanged(nameof(ComboBoxVisibility));
                 OnPropertyChanged(nameof(TextBlockVisibility));
             }
